@@ -12,6 +12,7 @@ import java.util.List;
  * @author Create by xuantang
  * @date on 10/31/17
  */
+
 @Mapper
 public interface MovieMapper {
 

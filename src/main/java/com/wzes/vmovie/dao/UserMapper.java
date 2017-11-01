@@ -12,6 +12,7 @@ import java.util.List;
  * @author Create by xuantang
  * @date on 10/31/17
  */
+
 @Mapper
 public interface UserMapper {
 
@@ -19,7 +20,7 @@ public interface UserMapper {
     int addUser(User user);
 
     @Select("SELECT username, password FROM user WHERE username = #{username} and password = #{password}")
-    User findUser(String username, String password);
+    User findUser(User user);
 
     @Delete("DELETE FROM user WHERE username = #{username}")
     int removeUser(User user);

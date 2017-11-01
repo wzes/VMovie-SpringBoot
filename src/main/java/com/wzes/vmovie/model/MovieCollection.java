@@ -4,6 +4,7 @@ package com.wzes.vmovie.model;
  * @author Create by xuantang
  * @date on 10/31/17
  */
+
 public class MovieCollection {
 
     private String username;

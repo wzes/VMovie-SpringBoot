@@ -1,5 +1,6 @@
 package com.wzes.vmovie.model;
 
+
 import com.alibaba.fastjson.JSON;
 
 /**

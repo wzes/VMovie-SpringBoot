@@ -27,7 +27,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public String login(@RequestParam String username, @RequestParam String password){
-        User user = userMapper.findUser(username, password);
+        User user = userMapper.findUser(new User(username, password));
         int code = 0;
         if(null == user){
             code = 1;

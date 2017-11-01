@@ -6,6 +6,8 @@ import com.wzes.vmovie.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Create by xuantang
  * @date on 10/31/17
@@ -25,11 +27,13 @@ public class MovieController {
         int code = movieMapper.addMovieCollection(movieCollection);
         Result result = new Result(String.valueOf(code), "");
         return result.toString();
+
     }
 
-    @GetMapping(value = "/movie_collections/{username}")
-    private String getMovieCollection(@PathVariable String username){
-        return null;
+    @GetMapping(value = "/{username}/movie_collections", produces = "application/xml")
+    private List<MovieCollection> getMovieCollection(@PathVariable String username){
+        List<MovieCollection> movieCollections = movieMapper.findMovieCollection(username);
+        return movieCollections;
     }
 
 }
