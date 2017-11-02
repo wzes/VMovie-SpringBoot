@@ -27,14 +27,14 @@ public class MovieController {
                                       @RequestParam String movie_id,
                                       @RequestParam String data){
         MovieCollection movieCollection = new MovieCollection(username, movie_id, data);
-        int code = movieMapper.addMovieCollection(movieCollection);
-        Result result = new Result(String.valueOf(code), "");
-        return result.toString();
+//        int code = movieMapper.addMovieCollection(movieCollection);
+//        Result result = new Result(String.valueOf(code), "");
+        return movieCollection.toString();
 
     }
 
     @GetMapping(value = "/{username}/movie_collections", produces = { "application/xml;charset=UTF-8" })
-    private String  getMovieCollection(@PathVariable String username){
+    private String getMovieCollection(@PathVariable String username){
         List<MovieCollection> movieCollections = movieMapper.findMovieCollection(username);
         // build xml file
         StringBuilder sb = new StringBuilder();

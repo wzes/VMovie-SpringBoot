@@ -31,4 +31,5 @@ public class DownloadController {
     private List<MovieLink> getDownloadLinks(@PathVariable String moviename) throws IOException {
         return downloadService.findLink(moviename);
     }
+
 }

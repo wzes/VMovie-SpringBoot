@@ -35,6 +35,7 @@ public class Result {
     }
 
     private String code;
+
     private String data;
 
     @Override
