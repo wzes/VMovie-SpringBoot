@@ -11,17 +11,19 @@ import java.io.IOException;
 public class Test {
     public static void main(String[] args) {
         OkHttpClient okHttpClient = new OkHttpClient();
-
-        FormBody.Builder formBody = new FormBody.Builder();
-        formBody.add("username", "1552730");
-        formBody.add("password", "123456");
-        RequestBody requestBody = formBody.build();
-
+//
+//        FormBody.Builder formBody = new FormBody.Builder();
+//        formBody.add("username", "1552730");
+//        formBody.add("password", "123456");
+//        RequestBody requestBody = formBody.build();
+//
+//        Request request = new Request.Builder()
+//                .url("http://localhost:9999/vmovie/login")
+//                .post(requestBody)
+//                .build();
         Request request = new Request.Builder()
-                .url("http://localhost:9999/vmovie/login")
-                .post(requestBody)
+                .url("http://localhost:9999/vmovie/search/雷神")
                 .build();
-
         Call call = okHttpClient.newCall(request);
 
         call.enqueue(new Callback() {

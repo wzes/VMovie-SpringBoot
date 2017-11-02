@@ -16,10 +16,10 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
 
-    @Select("SELECT username, movie_id, data FROM movie_collection WHERE username = #{username}")
+    @Select("SELECT data, movie_id FROM movie_collection WHERE username = #{username}")
     List<MovieCollection> findMovieCollection(String username);
 
-    @Insert("INSERT INTO movie_collection(username, movie_id VALUES (#{username}, #{movie_id})")
+    @Insert("INSERT INTO movie_collection(username, movie_id, data VALUES (#{username}, #{movie_id}, #{data})")
     int addMovieCollection(MovieCollection movieCollection);
 
     @Delete("DELETE FROM movie_collection WHERE username = #{username}, movie_id = #{movie_id}")

@@ -3,6 +3,8 @@ package com.wzes.vmovie.controller;
 import com.wzes.vmovie.dao.MovieMapper;
 import com.wzes.vmovie.model.MovieCollection;
 import com.wzes.vmovie.model.Result;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,25 +17,40 @@ import java.util.List;
 @RestController
 @RequestMapping({"/vmovie"})
 public class MovieController {
-
+    private static Logger log = LogManager.getLogger(MovieController.class); //日志输出
     @Autowired
     MovieMapper movieMapper;
 
 
     @PostMapping(value = "/movie_collection")
     private String addMovieCollection(@RequestParam String username,
-                                      @RequestParam String movie_id){
-        MovieCollection movieCollection = new MovieCollection(username, movie_id);
+                                      @RequestParam String movie_id,
+                                      @RequestParam String data){
+        MovieCollection movieCollection = new MovieCollection(username, movie_id, data);
         int code = movieMapper.addMovieCollection(movieCollection);
         Result result = new Result(String.valueOf(code), "");
         return result.toString();
 
     }
 
-    @GetMapping(value = "/{username}/movie_collections", produces = "application/xml")
-    private List<MovieCollection> getMovieCollection(@PathVariable String username){
+    @GetMapping(value = "/{username}/movie_collections", produces = { "application/xml;charset=UTF-8" })
+    private String  getMovieCollection(@PathVariable String username){
         List<MovieCollection> movieCollections = movieMapper.findMovieCollection(username);
-        return movieCollections;
+        // build xml file
+        StringBuilder sb = new StringBuilder();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<movies xmlns=\"http://www.microsoft.com\"\n" +
+                "\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                "\txsi:SchemaLocation=\"http://*movie.xsd\">");
+        for(MovieCollection movieCollection : movieCollections){
+            sb.append("<movie>");
+            sb.append("<id>").append(movieCollection.getMovie_id()).append("</id>");
+            sb.append("<data>").append(movieCollection.getData()).append("</data>");
+            sb.append("</movie>");
+        }
+        sb.append("</movies>");
+        log.info(movieCollections.size());
+        return sb.toString();
     }
 
 }

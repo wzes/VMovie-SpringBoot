@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" monitorInterval="30">
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <console name="Console" target="SYSTEM_OUT">
+            <!--输出日志的格式-->
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        </console>
+
+        <RollingFile name="INFO_ROLLING_FILE"
+                     fileName="log/vmovie.log"
+                     filePattern="log/%d{yyyy-MM-dd}-vmovie-rolling.log">
+            <PatternLayout>
+                <Pattern>[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n </Pattern>
+            </PatternLayout>
+
+            <!-- 文件截断的条件，具体参考文档 -->
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <SizeBasedTriggeringPolicy size="1024 KB"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+
+    <loggers>
+        <Logger name="com.wzes.wechat" level="INFO">
+            <appender-ref ref="INFO_ROLLING_FILE" />
+        </Logger>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>
