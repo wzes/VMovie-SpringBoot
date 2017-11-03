@@ -22,27 +22,28 @@ public class MovieController {
     MovieMapper movieMapper;
 
 
-    @PostMapping(value = "/movie_collection")
+    @RequestMapping(value = "/movie_collection", method = RequestMethod.POST)
     private String addMovieCollection(@RequestParam String username,
                                       @RequestParam String movie_id,
-                                      @RequestParam String data){
+                                      @RequestParam String data) {
         MovieCollection movieCollection = new MovieCollection(username, movie_id, data);
-//        int code = movieMapper.addMovieCollection(movieCollection);
+        movieMapper.addMovieCollection(movieCollection);
+        log.info(movieCollection.toString());
 //        Result result = new Result(String.valueOf(code), "");
         return movieCollection.toString();
 
     }
 
-    @GetMapping(value = "/{username}/movie_collections", produces = { "application/xml;charset=UTF-8" })
-    private String getMovieCollection(@PathVariable String username){
+    @GetMapping(value = "/{username}/movie_collections", produces = {"application/xml;charset=UTF-8"})
+    private String getMovieCollection(@PathVariable String username) {
         List<MovieCollection> movieCollections = movieMapper.findMovieCollection(username);
         // build xml file
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<movies xmlns=\"http://www.microsoft.com\"\n" +
                 "\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                "\txsi:SchemaLocation=\"http://*movie.xsd\">");
-        for(MovieCollection movieCollection : movieCollections){
+                "\txsi:SchemaLocation=\"http://59.110.136.134/documents/movie.xsd\">");
+        for (MovieCollection movieCollection : movieCollections) {
             sb.append("<movie>");
             sb.append("<id>").append(movieCollection.getMovie_id()).append("</id>");
             sb.append("<data>").append(movieCollection.getData()).append("</data>");
@@ -53,4 +54,11 @@ public class MovieController {
         return sb.toString();
     }
 
+    @RequestMapping(value = "/{username}/movie_collection/{movie_id}", method = RequestMethod.DELETE)
+    private int removeMovieCollection(@PathVariable String username, @PathVariable String movie_id) {
+        MovieCollection movieCollection = new MovieCollection();
+        movieCollection.setUsername(username);
+        movieCollection.setMovie_id(movie_id);
+        return movieMapper.removeMovieCollection(movieCollection);
+    }
 }

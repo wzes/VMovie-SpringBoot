@@ -19,9 +19,9 @@ public interface MovieMapper {
     @Select("SELECT data, movie_id FROM movie_collection WHERE username = #{username}")
     List<MovieCollection> findMovieCollection(String username);
 
-    @Insert("INSERT INTO movie_collection(username, movie_id, data VALUES (#{username}, #{movie_id}, #{data})")
+    @Insert("INSERT INTO movie_collection (username, movie_id, data) VALUES (#{username}, #{movie_id}, #{data});")
     int addMovieCollection(MovieCollection movieCollection);
 
-    @Delete("DELETE FROM movie_collection WHERE username = #{username}, movie_id = #{movie_id}")
-    int removeMovieCollection(String username, String movie_id);
+    @Delete("DELETE FROM movie_collection WHERE username = #{username} and movie_id = #{movie_id}")
+    int removeMovieCollection(MovieCollection movieCollection);
 }

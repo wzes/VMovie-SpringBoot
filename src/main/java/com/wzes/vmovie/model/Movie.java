@@ -1,5 +1,7 @@
 package com.wzes.vmovie.model;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.List;
 
 /**
@@ -104,5 +106,10 @@ public class Movie {
 
     public void setDownloadLinks(List<MovieLink> downloadLinks) {
         this.downloadLinks = downloadLinks;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }
