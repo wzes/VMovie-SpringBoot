@@ -29,7 +29,6 @@ public class MovieController {
         MovieCollection movieCollection = new MovieCollection(username, movie_id, data);
         movieMapper.addMovieCollection(movieCollection);
         log.info(movieCollection.toString());
-//        Result result = new Result(String.valueOf(code), "");
         return movieCollection.toString();
 
     }
